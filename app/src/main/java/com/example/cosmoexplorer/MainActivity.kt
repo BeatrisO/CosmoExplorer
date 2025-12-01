@@ -1,13 +1,46 @@
 package com.example.cosmoexplorer
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.cosmoexplorer.presentation.components.BottomItem
+import com.example.cosmoexplorer.presentation.components.NavigationBar
+import com.example.cosmoexplorer.presentation.screens.SettingsScreen
+import com.example.space.ui.theme.CosmoExplorerTheme
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        setContent {
+            CosmoExplorerTheme {
+                val navController = rememberNavController()
 
+                Scaffold(
+                    bottomBar = {
+                        NavigationBar(navController = navController)
+                    }
+                ) { innerPadding ->
+                    NavHost(
+                        navController = navController,
+                        startDestination = BottomItem.Apod.route,
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
+                        composable(BottomItem.Apod.route) {
+                            ApodScreen(navController)
+                        }
+                        composable(BottomItem.Settings.route) {
+                            SettingsScreen(navController)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
