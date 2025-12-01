@@ -10,7 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cosmoexplorer.presentation.components.BottomItem
-import com.example.cosmoexplorer.presentation.components.NavigationBar
+import com.example.cosmoexplorer.presentation.components.BottomNavigationBar
+import com.example.cosmoexplorer.presentation.screens.ApodScreen
 import com.example.cosmoexplorer.presentation.screens.SettingsScreen
 import com.example.space.ui.theme.CosmoExplorerTheme
 
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(
                     bottomBar = {
-                        NavigationBar(navController = navController)
+                        BottomNavigationBar(navController = navController)
                     }
                 ) { innerPadding ->
                     NavHost(
@@ -33,10 +34,10 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable(BottomItem.Apod.route) {
-                            ApodScreen(navController)
+                            ApodScreen()
                         }
                         composable(BottomItem.Settings.route) {
-                            SettingsScreen(navController)
+                            SettingsScreen()
                         }
                     }
                 }

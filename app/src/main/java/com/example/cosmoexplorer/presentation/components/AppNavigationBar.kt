@@ -1,5 +1,8 @@
 package com.example.cosmoexplorer.presentation.components
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -8,14 +11,16 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.compose.material3.Icon
+
 
 sealed class BottomItem(val route: String, val icon: ImageVector, val label: String) {
-    object Apod : BottomItem("apod", Icons.Default.Home, "Apod")
-    object Settings : BottomItem("settings", Icons.Default.Settings, "Config")
-
+    object Apod : BottomItem("apod", Icons.Default.Star, "Apod")
+    object Settings : BottomItem("settings", Icons.Default.Settings, "Configuração")
 }
+
 @Composable
-fun NavigationBar(navController: NavHostController) {
+fun BottomNavigationBar(navController: NavHostController) {
 
     val items = listOf(
         BottomItem.Apod,

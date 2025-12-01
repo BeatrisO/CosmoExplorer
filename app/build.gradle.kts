@@ -72,5 +72,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata")
     implementation("androidx.compose.runtime:runtime-rxjava2")
     implementation("androidx.navigation:navigation-compose:2.x.x")
+    implementation("androidx.compose.material:material-icons-extended:<versão-do-compose>")
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
 }
