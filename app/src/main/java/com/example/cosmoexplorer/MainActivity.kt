@@ -11,7 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cosmoexplorer.presentation.components.BottomItem
 import com.example.cosmoexplorer.presentation.components.BottomNavigationBar
-import com.example.cosmoexplorer.presentation.screens.ApodScreen
+import com.example.cosmoexplorer.presentation.screens.apod.ApodScreen
 import com.example.cosmoexplorer.presentation.screens.SettingsScreen
 import com.example.space.ui.theme.CosmoExplorerTheme
 
