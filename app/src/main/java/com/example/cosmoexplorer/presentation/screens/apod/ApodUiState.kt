@@ -5,5 +5,6 @@ data class ApodUiState(
     val title: String? = null,
     val explanation: String? = null,
     val imageUrl: String? = null,
+    val date: String? = null,
     val error: String? = null
 )

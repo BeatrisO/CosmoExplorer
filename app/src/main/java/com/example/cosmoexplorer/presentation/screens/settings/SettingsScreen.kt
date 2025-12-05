@@ -1,4 +1,4 @@
-package com.example.cosmoexplorer.presentation.screens
+package com.example.cosmoexplorer.presentation.screens.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
