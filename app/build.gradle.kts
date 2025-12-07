@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -6,8 +9,11 @@ plugins {
 
 android {
     namespace = "com.example.cosmoexplorer"
-    compileSdk {
-        version = release(36)
+    compileSdk = 36
+
+    buildFeatures {
+        compose = true
+        buildConfig = true
     }
 
     defaultConfig {
@@ -18,6 +24,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val properties = Properties()
+        properties.load(FileInputStream(rootProject.file("local.properties")))
+
+        buildConfigField(
+            "String",
+            "NASA_API_KEY",
+            "\"${properties.getProperty("NASA_API_KEY")}\""
+        )
     }
 
     buildTypes {
@@ -35,12 +50,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
-    }
-
-    android {
-        buildFeatures {
-            compose = true
-        }
     }
 }
 

@@ -8,6 +8,5 @@ interface ApiService {
 
     @GET("planetary/apod")
     suspend fun getApod(
-        @Query("api_key") apiKey: String
-    ): ApodResponse
+        @Query("api_key") apiKey: String): ApodResponse
 }
