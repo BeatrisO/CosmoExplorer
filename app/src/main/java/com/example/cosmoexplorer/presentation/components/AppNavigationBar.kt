@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 
 sealed class BottomItem(val route: String, val icon: ImageVector, val label: String) {
     object Apod : BottomItem("apod", Icons.Default.Star, "Apod")
-    object Settings : BottomItem("settings", Icons.Default.Settings, "Configuração")
+    object Settings : BottomItem("settings", Icons.Default.Settings, "Settings")
 }
 
 @Composable

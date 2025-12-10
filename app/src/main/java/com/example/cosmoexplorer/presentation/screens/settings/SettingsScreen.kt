@@ -18,10 +18,10 @@ fun SettingsScreen() {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(text = "Configurações", style = MaterialTheme.typography.headlineMedium)
+        Text(text = "Settings", style = MaterialTheme.typography.headlineMedium)
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text(text = "Sobre o App")
+        Text(text = "About")
     }
 }
