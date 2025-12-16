@@ -8,8 +8,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -24,8 +25,7 @@ import com.example.space.ui.screens.apod.ApodViewModel
 
 @Composable
 fun ApodScreen(viewModel: ApodViewModel = viewModel()) {
-
-    val state = viewModel.uiState
+    val state by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.loadApod(BuildConfig.NASA_API_KEY)

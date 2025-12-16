@@ -3,32 +3,33 @@ package com.example.space.ui.screens.apod
 import ApodRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ApodViewModel(
     private val repository: ApodRepository = ApodRepository()
 ) : ViewModel() {
 
-    var uiState = ApodUiState()
-        private set
+    private var state = MutableStateFlow(ApodUiState())
+    var uiState = state.asStateFlow()
 
     fun loadApod(apiKey: String) {
-        uiState = uiState.copy(isLoading = true)
+        state.value.isLoading = true
 
         viewModelScope.launch {
             try {
                 val response = repository.getApod(apiKey)
 
-                uiState = uiState.copy(
+                state.value = ApodUiState(
                     isLoading = false,
                     title = response.title,
                     explanation = response.explanation,
-                    imageUrl = response.url,
-                    error = null
+                    imageUrl = response.url
                 )
 
             } catch (e: Exception) {
-                uiState = uiState.copy(
+                state.value = ApodUiState(
                     isLoading = false,
                     error = e.message
                 )
