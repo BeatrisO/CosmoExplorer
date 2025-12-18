@@ -14,6 +14,7 @@ import com.example.cosmoexplorer.presentation.components.BottomItem
 import com.example.cosmoexplorer.presentation.components.BottomNavigationBar
 import com.example.cosmoexplorer.presentation.screens.apod.ApodScreen
 import com.example.cosmoexplorer.presentation.screens.settings.SettingsScreen
+import com.example.cosmoexplorer.presentation.screens.spacex.SpacexScreen
 import com.example.cosmoexplorer.presentation.theme.CosmoExplorerTheme
 
 
@@ -38,6 +39,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable(BottomItem.Apod.route) { ApodScreen() }
+                        composable(BottomItem.Spacex.route) { SpacexScreen() }
                         composable(BottomItem.Settings.route) { SettingsScreen() }
                     }
                 }

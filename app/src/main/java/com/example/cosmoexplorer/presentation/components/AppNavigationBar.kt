@@ -3,6 +3,7 @@ package com.example.cosmoexplorer.presentation.components
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.RocketLaunch
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.NavigationBar
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.sp
 
 sealed class BottomItem(val route: String, val icon: ImageVector, val label: String) {
     object Apod : BottomItem("apod", Icons.Default.Star, "Apod")
+    object Spacex : BottomItem("spacex", Icons.Filled.RocketLaunch, "SpaceX")
     object Settings : BottomItem("settings", Icons.Default.Settings, "Settings")
 }
 
@@ -32,6 +34,7 @@ fun BottomNavigationBar(navController: NavHostController) {
 
     val items = listOf(
         BottomItem.Apod,
+        BottomItem.Spacex,
         BottomItem.Settings
     )
 
