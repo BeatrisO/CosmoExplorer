@@ -17,7 +17,7 @@ O projeto foi construído para praticar Jetpack Compose, consumo de APIs, navega
 * Retrofit
 * ViewModel
 * Coroutines
-* Flow
+* StateFlow
 * Coil
 * Bottom Navigation
 * Material Design 3
@@ -27,12 +27,11 @@ NASA APOD
 * Astronomy Picture of the Day
 * Retorna imagem, título, data e explicação científica
 
-SpaceX API (em desenvolvimento)
+SpaceX API 
 * Retorna informações do lançamento mais recente
 
 ### Melhorias Futuras
 * Histórico de imagens da NASA
 * Busca por data personalizada
-* Integração completa da SpaceX API
 * Tela com lista de lançamentos
 * Tema claro/escuro
