@@ -12,14 +12,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.cosmoexplorer.BuildConfig
 import com.example.space.ui.screens.apod.ApodViewModel
 
@@ -33,19 +34,22 @@ fun ApodScreen(viewModel: ApodViewModel = viewModel()) {
 
     val cleanExplanation = remember(state.title, state.explanation) {
         state.explanation
-            ?.removePrefix("${state.title}.")
-            ?.trimStart()
+            .removePrefix("${state.title}.")
+            .trimStart()
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFCBC4C4))
+            .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
     ) {
 
         AsyncImage(
-            model = state.imageUrl,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(state.imageUrl)
+                .crossfade(true)
+                .build(),
             contentDescription = state.title,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -61,10 +65,10 @@ fun ApodScreen(viewModel: ApodViewModel = viewModel()) {
         ) {
 
             Text(
-                text = state.title ?: "",
+                text = state.title,
                 style = MaterialTheme.typography.headlineSmall.copy(
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.onBackground,
                     lineHeight = 30.sp
                 ),
                 textAlign = TextAlign.Start,
@@ -73,31 +77,27 @@ fun ApodScreen(viewModel: ApodViewModel = viewModel()) {
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            cleanExplanation?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        fontSize = 17.sp,
-                        color = Color.Black,
-                        lineHeight = 26.sp
-                    ),
-                    textAlign = TextAlign.Justify,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+            Text(
+                text = cleanExplanation,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontSize = 17.sp,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    lineHeight = 26.sp
+                ),
+                textAlign = TextAlign.Justify,
+                modifier = Modifier.fillMaxWidth()
+            )
 
             Spacer(modifier = Modifier.height(22.dp))
 
-            state.date?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        color = Color.DarkGray
-                    ),
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+            Text(
+                text = state.date,
+                style = MaterialTheme.typography.labelMedium.copy(
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+                ),
+                textAlign = TextAlign.End,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }
