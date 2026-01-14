@@ -28,7 +28,7 @@ class ApodViewModel(
                     isLoading = false,
                     title = response.title,
                     explanation = response.explanation,
-                    imageUrl = response.url,
+                    imageUrl = response.url ?: "",
                     date = response.date
                 )
 
