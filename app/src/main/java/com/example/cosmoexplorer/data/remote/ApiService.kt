@@ -12,5 +12,5 @@ interface ApiService {
         @Query("api_key") apiKey: String): ApodResponse
 
     @GET("rockets")
-    suspend fun get(): RocketsResponse
+    suspend fun getRockets(): RocketsResponse
 }
