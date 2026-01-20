@@ -5,6 +5,6 @@ import com.example.space.data.remote.RetrofitInstance
 
 class SpaceXRepository {
     suspend fun getRockets(): List<Rocket> {
-        return RetrofitInstance.apiSpaceX.getRockets().rockets
+        return RetrofitInstance.apiSpaceX.getRockets()
     }
 }

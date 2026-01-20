@@ -25,10 +25,11 @@ class SpaceXViewModel(
         viewModelScope.launch {
             try {
                 val rockets = repository.getRockets()
+                val firstRocketName = rockets.firstOrNull()?.name
 
                 state.value = SpacexUiState(
                     isLoading = false,
-                    rockets = rockets
+                    name = firstRocketName
                 )
 
             } catch (e: Exception) {

@@ -22,8 +22,7 @@ fun SpacexScreen(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = state.errorMessage
-                ?: state.rockets.firstOrNull()?.name.orEmpty(),
+            text = state.name.orEmpty(),
             style = MaterialTheme.typography.headlineMedium
         )
     }
