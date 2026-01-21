@@ -1,5 +1,6 @@
 package com.example.cosmoexplorer.data.model
 
 data class Rocket (
-    val name: String
+    val name: String,
+    val description: String
 )

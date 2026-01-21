@@ -1,7 +1,9 @@
 package com.example.cosmoexplorer.presentation.screens.spacex
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -9,6 +11,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.cosmoexplorer.presentation.viewmodel.SpaceXViewModel
 
 @Composable
@@ -17,13 +21,22 @@ fun SpacexScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
 
-    Box(
+    Column(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            text = state.name.orEmpty(),
-            style = MaterialTheme.typography.headlineMedium
-        )
+
+        state.name?.let {
+            Text(text = it,
+                style = MaterialTheme.typography.headlineMedium
+            )
+        }
+
+        state.description?.let {
+            Text(text = it,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
     }
 }
