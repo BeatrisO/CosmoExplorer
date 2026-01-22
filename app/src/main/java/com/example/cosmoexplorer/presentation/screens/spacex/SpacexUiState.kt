@@ -5,5 +5,6 @@ data class SpacexUiState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val name: String? = null,
-    val description: String? = null
+    val description: String? = null,
+    val imageurl: String? = null
 )

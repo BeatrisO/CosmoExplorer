@@ -27,6 +27,14 @@ fun SpacexScreen(
         verticalArrangement = Arrangement.Center
     ) {
 
+        state.imageurl?.let { image ->
+        AsyncImage(
+                model = image,
+                contentDescription = state.name,
+                modifier = Modifier.size(400.dp)
+            )
+        }
+
         state.name?.let {
             Text(text = it,
                 style = MaterialTheme.typography.headlineMedium
