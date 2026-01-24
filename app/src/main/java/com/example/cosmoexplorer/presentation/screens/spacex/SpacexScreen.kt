@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,24 +28,43 @@ fun SpacexScreen(
         verticalArrangement = Arrangement.Center
     ) {
 
-        state.imageurl?.let { image ->
-        AsyncImage(
-                model = image,
-                contentDescription = state.name,
-                modifier = Modifier.size(400.dp)
-            )
-        }
+        when {
+            state.isLoading -> {
+                CircularProgressIndicator()
+            }
 
-        state.name?.let {
-            Text(text = it,
-                style = MaterialTheme.typography.headlineMedium
-            )
-        }
+            state.errorMessage != null -> {
+                state.errorMessage?.let { error ->
+                    Text(
+                        text = error,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            }
 
-        state.description?.let {
-            Text(text = it,
-                style = MaterialTheme.typography.bodyMedium
-            )
+            else -> {
+                state.imageurl?.let { image ->
+                    AsyncImage(
+                        model = image,
+                        contentDescription = state.name,
+                        modifier = Modifier.size(400.dp)
+                    )
+                }
+
+                state.name?.let {
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                }
+
+                state.description?.let {
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            }
         }
     }
 }

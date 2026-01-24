@@ -12,9 +12,7 @@ class SpaceXViewModel(
     private val repository: SpaceXRepository = SpaceXRepository()
 ) : ViewModel() {
 
-    private val state = MutableStateFlow(
-        SpacexUiState(isLoading = true)
-    )
+    private val state = MutableStateFlow(SpacexUiState(isLoading = true))
     val uiState: StateFlow<SpacexUiState> = state
 
     init {
@@ -23,6 +21,8 @@ class SpaceXViewModel(
 
     private fun loadRockets() {
         viewModelScope.launch {
+            state.value = SpacexUiState(isLoading = true)
+
             try {
                 val rockets = repository.getRockets()
                 val firstRocket = rockets.firstOrNull()
@@ -37,7 +37,7 @@ class SpaceXViewModel(
             } catch (e: Exception) {
                 state.value = SpacexUiState(
                     isLoading = false,
-                    errorMessage = e.message
+                    errorMessage = "Error loading rocket"
                 )
             }
         }
