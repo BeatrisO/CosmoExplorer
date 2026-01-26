@@ -1,6 +1,6 @@
 package com.example.cosmoexplorer.presentation.viewmodel
 
-import com.example.cosmoexplorer.presentation.screens.spacex.SpacexUiState
+import com.example.cosmoexplorer.presentation.screens.spacex.listscreen.RocketListUiState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cosmoexplorer.data.repository.SpaceXRepository
@@ -12,8 +12,8 @@ class SpaceXViewModel(
     private val repository: SpaceXRepository = SpaceXRepository()
 ) : ViewModel() {
 
-    private val state = MutableStateFlow(SpacexUiState(isLoading = true))
-    val uiState: StateFlow<SpacexUiState> = state
+    private val state = MutableStateFlow(RocketListUiState(isLoading = true))
+    val uiState: StateFlow<RocketListUiState> = state
 
     init {
         loadRockets()
@@ -21,13 +21,13 @@ class SpaceXViewModel(
 
     private fun loadRockets() {
         viewModelScope.launch {
-            state.value = SpacexUiState(isLoading = true)
+            state.value = RocketListUiState(isLoading = true)
 
             try {
                 val rockets = repository.getRockets()
                 val firstRocket = rockets.firstOrNull()
 
-                state.value = SpacexUiState(
+                state.value = RocketListUiState(
                     isLoading = false,
                     name = firstRocket?.name,
                     description = firstRocket?.description,
@@ -35,7 +35,7 @@ class SpaceXViewModel(
                 )
 
             } catch (e: Exception) {
-                state.value = SpacexUiState(
+                state.value = RocketListUiState(
                     isLoading = false,
                     errorMessage = "Error loading rocket"
                 )

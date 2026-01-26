@@ -1,7 +1,6 @@
-package com.example.cosmoexplorer.presentation.screens.spacex
+package com.example.cosmoexplorer.presentation.screens.spacex.listscreen
 
-
-data class SpacexUiState(
+data class RocketListUiState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val name: String? = null,

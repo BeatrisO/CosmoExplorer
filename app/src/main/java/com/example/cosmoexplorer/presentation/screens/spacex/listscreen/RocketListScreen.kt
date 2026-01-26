@@ -1,4 +1,4 @@
-package com.example.cosmoexplorer.presentation.screens.spacex
+package com.example.cosmoexplorer.presentation.screens.spacex.listscreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,12 +13,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.cosmoexplorer.presentation.viewmodel.SpaceXViewModel
 
 @Composable
 fun SpacexScreen(
-    viewModel: SpaceXViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: SpaceXViewModel = viewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
 

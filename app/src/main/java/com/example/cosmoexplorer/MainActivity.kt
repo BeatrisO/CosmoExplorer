@@ -14,7 +14,7 @@ import com.example.cosmoexplorer.presentation.components.BottomItem
 import com.example.cosmoexplorer.presentation.components.BottomNavigationBar
 import com.example.cosmoexplorer.presentation.screens.apod.ApodScreen
 import com.example.cosmoexplorer.presentation.screens.settings.SettingsScreen
-import com.example.cosmoexplorer.presentation.screens.spacex.SpacexScreen
+import com.example.cosmoexplorer.presentation.screens.spacex.listscreen.SpacexScreen
 import com.example.cosmoexplorer.presentation.theme.CosmoExplorerTheme
 
 
