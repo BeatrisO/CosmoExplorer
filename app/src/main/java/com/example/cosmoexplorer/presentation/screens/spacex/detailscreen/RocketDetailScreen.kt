@@ -1,12 +1,12 @@
 package com.example.cosmoexplorer.presentation.screens.spacex.detailscreen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -54,37 +54,38 @@ fun RocketDetail(
         else -> {
             state.rocket?.let { rocket ->
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
 
-                    rocket.flickr_images.firstOrNull()?.let { image ->
-                        AsyncImage(
-                            model = image,
-                            contentDescription = rocket.name,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(300.dp),
-                            contentScale = ContentScale.Crop
+                    item {
+                        rocket.flickr_images.firstOrNull()?.let { image ->
+                            AsyncImage(
+                                model = image,
+                                contentDescription = rocket.name,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(300.dp),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                    }
+
+                    item {
+                        Text(
+                            text = rocket.name,
+                            style = MaterialTheme.typography.headlineMedium
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(
-                        text = rocket.name,
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(
-                        text = rocket.description,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
+                    item {
+                        Text(
+                            text = rocket.description,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
                 }
             }
         }
