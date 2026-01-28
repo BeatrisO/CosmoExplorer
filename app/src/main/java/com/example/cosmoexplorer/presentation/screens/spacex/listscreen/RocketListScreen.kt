@@ -1,9 +1,19 @@
 package com.example.cosmoexplorer.presentation.screens.spacex.listscreen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -12,60 +22,100 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.cosmoexplorer.presentation.viewmodel.SpaceXViewModel
+import com.example.cosmoexplorer.data.model.Rocket
+import com.example.cosmoexplorer.presentation.viewmodel.RocketListViewModel
+import androidx.compose.foundation.lazy.items
 
 @Composable
 fun SpacexScreen(
-    viewModel: SpaceXViewModel = viewModel()
+    viewModel: RocketListViewModel = viewModel(),
+    onRocketClick: (String) -> Unit
 ) {
     val state by viewModel.uiState.collectAsState()
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+    when {
+        state.isLoading -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+        }
+
+        state.errorMessage != null -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = state.errorMessage ?: "Error loading rockets",
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        }
+
+        else -> {
+            LazyColumn(
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(state.rockets) { rocket ->
+                    RocketCard(
+                        rocket = rocket,
+                        onClick = { onRocketClick(rocket.name) }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun RocketCard(
+    rocket: Rocket,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() },
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(4.dp)
     ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
 
-        when {
-            state.isLoading -> {
-                CircularProgressIndicator()
-            }
+            AsyncImage(
+                model = rocket.flickr_images.firstOrNull(),
+                contentDescription = rocket.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(180.dp),
+                contentScale = ContentScale.Crop
+            )
 
-            state.errorMessage != null -> {
-                state.errorMessage?.let { error ->
-                    Text(
-                        text = error,
-                        color = MaterialTheme.colorScheme.error
-                    )
-                }
-            }
+            Spacer(modifier = Modifier.height(8.dp))
 
-            else -> {
-                state.imageurl?.let { image ->
-                    AsyncImage(
-                        model = image,
-                        contentDescription = state.name,
-                        modifier = Modifier.size(400.dp)
-                    )
-                }
+            Text(
+                text = rocket.name,
+                style = MaterialTheme.typography.titleMedium
+            )
 
-                state.name?.let {
-                    Text(
-                        text = it,
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                }
+            Spacer(modifier = Modifier.height(4.dp))
 
-                state.description?.let {
-                    Text(
-                        text = it,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-            }
+            Text(
+                text = rocket.description,
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 3
+            )
         }
     }
 }

@@ -1,9 +1,12 @@
 package com.example.cosmoexplorer.presentation.screens.spacex.detailscreen
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -12,56 +15,74 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.cosmoexplorer.presentation.viewmodel.SpaceXViewModel
+import com.example.cosmoexplorer.presentation.viewmodel.RocketDetailViewModel
 
 @Composable
 fun RocketDetail(
-    viewModel: SpaceXViewModel = viewModel()
+    viewModel: RocketDetailViewModel = viewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-
-        when {
-            state.isLoading -> {
-                CircularProgressIndicator()
+    when {
+        state.isLoading -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colorScheme.primary
+                )
             }
+        }
 
-            state.errorMessage != null -> {
-                state.errorMessage?.let { error ->
-                    Text(
-                        text = error,
-                        color = MaterialTheme.colorScheme.error
-                    )
-                }
+        state.errorMessage != null -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = state.errorMessage ?: "Error loading rockets",
+                    color = MaterialTheme.colorScheme.error
+                )
             }
+        }
 
-            else -> {
-                state.imageurl?.let { image ->
-                    AsyncImage(
-                        model = image,
-                        contentDescription = state.name,
-                        modifier = Modifier.size(400.dp)
-                    )
-                }
+        else -> {
+            state.rocket?.let { rocket ->
 
-                state.name?.let {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    rocket.flickr_images.firstOrNull()?.let { image ->
+                        AsyncImage(
+                            model = image,
+                            contentDescription = rocket.name,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(300.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
                     Text(
-                        text = it,
+                        text = rocket.name,
                         style = MaterialTheme.typography.headlineMedium
                     )
-                }
 
-                state.description?.let {
+                    Spacer(modifier = Modifier.height(8.dp))
+
                     Text(
-                        text = it,
+                        text = rocket.description,
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }

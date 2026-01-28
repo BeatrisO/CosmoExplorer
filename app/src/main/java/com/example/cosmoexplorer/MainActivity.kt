@@ -14,20 +14,19 @@ import com.example.cosmoexplorer.presentation.components.BottomItem
 import com.example.cosmoexplorer.presentation.components.BottomNavigationBar
 import com.example.cosmoexplorer.presentation.screens.apod.ApodScreen
 import com.example.cosmoexplorer.presentation.screens.settings.SettingsScreen
+import com.example.cosmoexplorer.presentation.screens.spacex.detailscreen.RocketDetail
 import com.example.cosmoexplorer.presentation.screens.spacex.listscreen.SpacexScreen
 import com.example.cosmoexplorer.presentation.theme.CosmoExplorerTheme
 
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
-
         setContent {
             CosmoExplorerTheme {
                 val navController = rememberNavController()
-
                 Scaffold(
                     bottomBar = {
                         BottomNavigationBar(navController)
@@ -38,9 +37,27 @@ class MainActivity : ComponentActivity() {
                         startDestination = BottomItem.Apod.route,
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        composable(BottomItem.Apod.route) { ApodScreen() }
-                        composable(BottomItem.Spacex.route) { SpacexScreen() }
-                        composable(BottomItem.Settings.route) { SettingsScreen() }
+                        composable(BottomItem.Apod.route) {
+                            ApodScreen()
+                        }
+
+                        composable(BottomItem.Spacex.route) {
+                            SpacexScreen(
+                                onRocketClick = { rocketName ->
+                                    navController.navigate("rocket_detail/$rocketName")
+                                }
+                            )
+                        }
+
+                        composable(
+                            route = "rocket_detail/{rocketName}"
+                        ) {
+                            RocketDetail()
+                        }
+
+                        composable(BottomItem.Settings.route) {
+                            SettingsScreen()
+                        }
                     }
                 }
             }

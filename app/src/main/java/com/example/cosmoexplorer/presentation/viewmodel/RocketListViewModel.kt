@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class SpaceXViewModel(
+class RocketListViewModel(
     private val repository: SpaceXRepository = SpaceXRepository()
 ) : ViewModel() {
 
@@ -25,13 +25,11 @@ class SpaceXViewModel(
 
             try {
                 val rockets = repository.getRockets()
-                val firstRocket = rockets.firstOrNull()
+
 
                 state.value = RocketListUiState(
                     isLoading = false,
-                    name = firstRocket?.name,
-                    description = firstRocket?.description,
-                    imageurl = firstRocket?.flickr_images?.firstOrNull()
+                    rockets = rockets
                 )
 
             } catch (e: Exception) {
