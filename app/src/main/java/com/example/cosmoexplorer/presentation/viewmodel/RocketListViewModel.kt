@@ -26,16 +26,14 @@ class RocketListViewModel(
             try {
                 val rockets = repository.getRockets()
 
-
                 state.value = RocketListUiState(
                     isLoading = false,
                     rockets = rockets
                 )
-
             } catch (e: Exception) {
                 state.value = RocketListUiState(
                     isLoading = false,
-                    errorMessage = "Error loading rocket"
+                    errorMessage = "Error loading rockets"
                 )
             }
         }

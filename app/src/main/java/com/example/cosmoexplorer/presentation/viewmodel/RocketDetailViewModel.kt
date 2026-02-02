@@ -1,6 +1,5 @@
 package com.example.cosmoexplorer.presentation.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cosmoexplorer.data.repository.SpaceXRepository
@@ -10,33 +9,33 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class RocketDetailViewModel(
-    private val repository: SpaceXRepository = SpaceXRepository(),
-    savedStateHandle: SavedStateHandle
+    private val repository: SpaceXRepository = SpaceXRepository()
 ) : ViewModel() {
 
     private val state = MutableStateFlow(RocketDetailUiState(isLoading = true))
     val uiState: StateFlow<RocketDetailUiState> = state
 
-    private val rocketName: String =
-        savedStateHandle["rocketName"] ?: ""
-
-    init {
-        loadRocket()
-    }
-
-    private fun loadRocket() {
+    fun loadRocketDetail(rocketId: String) {
         viewModelScope.launch {
             state.value = RocketDetailUiState(isLoading = true)
 
             try {
                 val rocket = repository
                     .getRockets()
-                    .first { it.name == rocketName }
+                    .firstOrNull { it.id == rocketId }
 
-                state.value = RocketDetailUiState(
-                    isLoading = false,
-                    rocket = rocket
-                )
+                if (rocket != null) {
+                    state.value = RocketDetailUiState(
+                        isLoading = false,
+                        errorMessage = null,
+                        rocket = rocket
+                    )
+                } else {
+                    state.value = RocketDetailUiState(
+                        isLoading = false,
+                        errorMessage = "Rocket not found"
+                    )
+                }
 
             } catch (e: Exception) {
                 state.value = RocketDetailUiState(

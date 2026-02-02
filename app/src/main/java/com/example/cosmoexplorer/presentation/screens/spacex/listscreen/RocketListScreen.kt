@@ -43,9 +43,7 @@ fun SpacexScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator(
-                    color = MaterialTheme.colorScheme.primary
-                )
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
             }
         }
 
@@ -63,13 +61,17 @@ fun SpacexScreen(
 
         else -> {
             LazyColumn(
+                modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(state.rockets) { rocket ->
+                items(
+                    items = state.rockets,
+                    key = { it.id } ) { rocket ->
                     RocketCard(
                         rocket = rocket,
-                        onClick = { onRocketClick(rocket.name) }
+                        onClick = { onRocketClick(rocket.id)
+                        }
                     )
                 }
             }
