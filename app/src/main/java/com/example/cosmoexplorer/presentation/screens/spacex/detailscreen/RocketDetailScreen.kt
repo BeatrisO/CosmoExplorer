@@ -7,9 +7,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -22,9 +30,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.cosmoexplorer.presentation.viewmodel.RocketDetailViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RocketDetail(
     rocketId: String,
+    onBackClick: () -> Unit,
     viewModel: RocketDetailViewModel = viewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -33,61 +43,82 @@ fun RocketDetail(
         viewModel.loadRocketDetail(rocketId)
     }
 
-    when {
-        state.isLoading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-            }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {},
+                navigationIcon = {
+                    IconButton(onClick = onBackClick) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Back"
+                        )
+                    }
+                }
+            )
         }
+    ) { innerPadding ->
 
-        state.errorMessage != null -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = state.errorMessage!!,
-                    color = MaterialTheme.colorScheme.error
-                )
+        when {
+            state.isLoading -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                }
             }
-        }
 
-        state.rocket != null -> {
-            val rocket = state.rocket!!
-
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-
-                item {
-                    AsyncImage(
-                        model = rocket.flickr_images.firstOrNull(),
-                        contentDescription = rocket.name,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(280.dp),
-                        contentScale = ContentScale.Crop
+            state.errorMessage != null -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = state.errorMessage!!,
+                        color = MaterialTheme.colorScheme.error
                     )
                 }
+            }
 
-                item {
-                    Text(
-                        text = rocket.name,
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                }
+            state.rocket != null -> {
+                val rocket = state.rocket!!
 
-                item {
-                    Text(
-                        text = rocket.description,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    item {
+                        AsyncImage(
+                            model = rocket.flickr_images.firstOrNull(),
+                            contentDescription = rocket.name,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(280.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+
+                    item {
+                        Text(
+                            text = rocket.name,
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                    }
+
+                    item {
+                        Text(
+                            text = rocket.description,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
                 }
             }
         }

@@ -73,7 +73,10 @@ fun CosmoExplorerApp() {
                     val rocketId =
                         backStackEntry.arguments?.getString("rocketId") ?: return@composable
 
-                    RocketDetail(rocketId = rocketId)
+                    RocketDetail(
+                        rocketId = rocketId,
+                        onBackClick = { navController.popBackStack() }
+                    )
                 }
 
                 composable(BottomItem.Settings.route) {
