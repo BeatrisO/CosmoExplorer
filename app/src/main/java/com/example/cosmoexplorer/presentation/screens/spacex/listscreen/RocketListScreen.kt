@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -91,9 +92,7 @@ fun RocketCard(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
+        Column {
 
             AsyncImage(
                 model = rocket.flickr_images.firstOrNull(),
@@ -104,12 +103,30 @@ fun RocketCard(
                 contentScale = ContentScale.Crop
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
 
-            Text(
-                text = rocket.name,
-                style = MaterialTheme.typography.titleMedium
-            )
+                Text(
+                    text = rocket.name,
+                    style = MaterialTheme.typography.titleMedium
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = if (rocket.active) "🚀 Ativo" else "🚫 Desativado",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = if (rocket.active)
+                            MaterialTheme.colorScheme.primary
+                        else
+                            MaterialTheme.colorScheme.error
+                    )
+                }
+            }
         }
     }
 }
