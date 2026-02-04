@@ -110,14 +110,6 @@ fun RocketCard(
                 text = rocket.name,
                 style = MaterialTheme.typography.titleMedium
             )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text = rocket.description,
-                style = MaterialTheme.typography.bodyMedium,
-                maxLines = 3
-            )
         }
     }
 }
