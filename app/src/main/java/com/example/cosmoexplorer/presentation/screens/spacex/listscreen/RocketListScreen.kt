@@ -1,5 +1,6 @@
 package com.example.cosmoexplorer.presentation.screens.spacex.listscreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -30,6 +33,9 @@ import coil.compose.AsyncImage
 import com.example.cosmoexplorer.data.model.Rocket
 import com.example.cosmoexplorer.presentation.viewmodel.RocketListViewModel
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.draw.clip
+import com.example.cosmoexplorer.presentation.theme.SuccessGreen
 
 @Composable
 fun SpacexScreen(
@@ -99,7 +105,7 @@ fun RocketCard(
                 contentDescription = rocket.name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(180.dp),
+                    .height(220.dp),
                 contentScale = ContentScale.Crop
             )
 
@@ -117,11 +123,22 @@ fun RocketCard(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+                    Box(
+                        modifier = Modifier
+                            .size(8.dp)
+                            .clip(CircleShape)
+                            .background(
+                                if (rocket.active) SuccessGreen
+                                else MaterialTheme.colorScheme.error
+                            )
+                    )
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
                     Text(
-                        text = if (rocket.active) "🚀 Ativo" else "🚫 Desativado",
+                        text = if (rocket.active) "Active" else "Disabled",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = if (rocket.active)
-                            MaterialTheme.colorScheme.primary
+                        color = if (rocket.active) SuccessGreen
                         else
                             MaterialTheme.colorScheme.error
                     )
