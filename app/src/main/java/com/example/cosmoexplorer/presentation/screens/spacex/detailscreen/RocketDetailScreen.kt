@@ -1,7 +1,9 @@
 package com.example.cosmoexplorer.presentation.screens.spacex.detailscreen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,6 +30,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.example.cosmoexplorer.presentation.theme.SuccessGreen
 import com.example.cosmoexplorer.presentation.viewmodel.RocketDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,6 +41,15 @@ fun RocketDetail(
     viewModel: RocketDetailViewModel = viewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
+
+    fun formatDate(date: String): String {
+        return date.split("-").reversed().joinToString("/")
+    }
+
+    fun formatUsd(value: Long): String {
+        return "US$ ${"%,d".format(value)}"
+    }
+
 
     LaunchedEffect(rocketId) {
         viewModel.loadRocketDetail(rocketId)
@@ -117,6 +129,29 @@ fun RocketDetail(
                         Text(
                             text = rocket.description,
                             style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+
+                    item {
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+
+                            Text(
+                                text = "Technical Details",
+                                style = MaterialTheme.typography.titleMedium
+                            )
+
+                            Text("First Flight: ${formatDate(rocket.first_flight)}")
+                            Text("Success Rate: ${rocket.success_rate_pct}%")
+                            Text("Cost per Launch: ${formatUsd(rocket.cost_per_launch)}")
+                        }
+                    }
+
+                    item {
+                        Text(
+                            text = "See more on Wikipedia",
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.clickable {
+                            }
                         )
                     }
                 }
