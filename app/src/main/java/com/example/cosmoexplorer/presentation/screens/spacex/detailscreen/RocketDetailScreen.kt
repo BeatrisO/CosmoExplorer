@@ -30,6 +30,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.example.cosmoexplorer.extensions.toDisplayDate
+import com.example.cosmoexplorer.extensions.toUsd
 import com.example.cosmoexplorer.presentation.theme.SuccessGreen
 import com.example.cosmoexplorer.presentation.viewmodel.RocketDetailViewModel
 
@@ -41,15 +43,6 @@ fun RocketDetail(
     viewModel: RocketDetailViewModel = viewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
-
-    fun formatDate(date: String): String {
-        return date.split("-").reversed().joinToString("/")
-    }
-
-    fun formatUsd(value: Long): String {
-        return "US$ ${"%,d".format(value)}"
-    }
-
 
     LaunchedEffect(rocketId) {
         viewModel.loadRocketDetail(rocketId)
@@ -140,9 +133,9 @@ fun RocketDetail(
                                 style = MaterialTheme.typography.titleMedium
                             )
 
-                            Text("First Flight: ${formatDate(rocket.first_flight)}")
+                            Text("First Flight: ${rocket.first_flight.toDisplayDate()}")
                             Text("Success Rate: ${rocket.success_rate_pct}%")
-                            Text("Cost per Launch: ${formatUsd(rocket.cost_per_launch)}")
+                            Text("Cost per Launch: ${rocket.cost_per_launch.toUsd()}")
                         }
                     }
 
