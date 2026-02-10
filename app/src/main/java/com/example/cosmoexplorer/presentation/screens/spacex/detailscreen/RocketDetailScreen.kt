@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,9 +29,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.cosmoexplorer.extensions.toDisplayDate
-import com.example.cosmoexplorer.extensions.toUsd
-import com.example.cosmoexplorer.presentation.theme.SuccessGreen
 import com.example.cosmoexplorer.presentation.viewmodel.RocketDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -102,7 +98,7 @@ fun RocketDetail(
                 ) {
                     item {
                         AsyncImage(
-                            model = rocket.flickr_images.firstOrNull(),
+                            model = rocket.imageUrl,
                             contentDescription = rocket.name,
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -133,9 +129,10 @@ fun RocketDetail(
                                 style = MaterialTheme.typography.titleMedium
                             )
 
-                            Text("First Flight: ${rocket.first_flight.toDisplayDate()}")
-                            Text("Success Rate: ${rocket.success_rate_pct}%")
-                            Text("Cost per Launch: ${rocket.cost_per_launch.toUsd()}")
+                            Text("First Flight: ${rocket.firstFlight}")
+                            Text("Success Rate: ${rocket.successRate}")
+                            Text("Cost per Launch: ${rocket.costPerLaunch}")
+
                         }
                     }
 
