@@ -4,6 +4,7 @@ import com.example.cosmoexplorer.presentation.screens.spacex.listscreen.RocketLi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cosmoexplorer.data.repository.SpaceXRepository
+import com.example.cosmoexplorer.presentation.screens.spacex.listscreen.RocketListUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -26,9 +27,17 @@ class RocketListViewModel(
             try {
                 val rockets = repository.getRockets()
 
+                val uiModels = rockets.map { rocket ->
+                    RocketListUiModel(
+                        id = rocket.id,
+                        name = rocket.name,
+                        statusText = if (rocket.active) "Active" else "Disabled",
+                        imageUrl = rocket.flickr_images.firstOrNull()
+                    )
+                }
                 state.value = RocketListUiState(
                     isLoading = false,
-                    rockets = rockets
+                    rockets = uiModels
                 )
             } catch (e: Exception) {
                 state.value = RocketListUiState(
