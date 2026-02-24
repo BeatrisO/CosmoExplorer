@@ -30,7 +30,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.cosmoexplorer.data.model.Rocket
 import com.example.cosmoexplorer.presentation.viewmodel.RocketListViewModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -88,7 +87,7 @@ fun SpacexScreen(
 
 @Composable
 fun RocketCard(
-    rocket: Rocket,
+    rocket: RocketListUiModel,
     onClick: () -> Unit
 ) {
     Card(
@@ -101,7 +100,7 @@ fun RocketCard(
         Column {
 
             AsyncImage(
-                model = rocket.flickr_images.firstOrNull(),
+                model = rocket.imageUrl,
                 contentDescription = rocket.name,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -128,7 +127,7 @@ fun RocketCard(
                             .size(8.dp)
                             .clip(CircleShape)
                             .background(
-                                if (rocket.active) SuccessGreen
+                                if (rocket.isActive) SuccessGreen
                                 else MaterialTheme.colorScheme.error
                             )
                     )
@@ -136,11 +135,10 @@ fun RocketCard(
                     Spacer(modifier = Modifier.width(8.dp))
 
                     Text(
-                        text = if (rocket.active) "Active" else "Disabled",
+                        text = rocket.statusText,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = if (rocket.active) SuccessGreen
-                        else
-                            MaterialTheme.colorScheme.error
+                        color = if (rocket.isActive) SuccessGreen
+                        else MaterialTheme.colorScheme.error
                     )
                 }
             }
