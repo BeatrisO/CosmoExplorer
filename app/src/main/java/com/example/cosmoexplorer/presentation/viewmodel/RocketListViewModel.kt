@@ -31,6 +31,7 @@ class RocketListViewModel(
                     RocketListUiModel(
                         id = rocket.id,
                         name = rocket.name,
+                        isActive = rocket.active,
                         statusText = if (rocket.active) "Active" else "Disabled",
                         imageUrl = rocket.flickr_images.firstOrNull()
                     )
