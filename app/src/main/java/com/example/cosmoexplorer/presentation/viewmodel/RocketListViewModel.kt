@@ -13,8 +13,8 @@ class RocketListViewModel(
     private val repository: SpaceXRepository = SpaceXRepository()
 ) : ViewModel() {
 
-    private val state = MutableStateFlow(RocketListUiState(isLoading = true))
-    val uiState: StateFlow<RocketListUiState> = state
+    private val _uiState = MutableStateFlow(RocketListUiState(isLoading = true))
+    val uiState: StateFlow<RocketListUiState> = _uiState
 
     init {
         loadRockets()
@@ -22,7 +22,8 @@ class RocketListViewModel(
 
     private fun loadRockets() {
         viewModelScope.launch {
-            state.value = RocketListUiState(isLoading = true)
+
+            _uiState.value = RocketListUiState(isLoading = true)
 
             try {
                 val rockets = repository.getRockets()
@@ -36,12 +37,14 @@ class RocketListViewModel(
                         imageUrl = rocket.flickr_images.firstOrNull()
                     )
                 }
-                state.value = RocketListUiState(
+
+                _uiState.value = RocketListUiState(
                     isLoading = false,
                     rockets = uiModels
                 )
             } catch (e: Exception) {
-                state.value = RocketListUiState(
+
+                _uiState.value = RocketListUiState(
                     isLoading = false,
                     errorMessage = "Error loading rockets"
                 )
