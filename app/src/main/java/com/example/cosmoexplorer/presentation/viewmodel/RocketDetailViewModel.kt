@@ -9,6 +9,7 @@ import com.example.cosmoexplorer.presentation.screens.spacex.detailscreen.Rocket
 import com.example.cosmoexplorer.presentation.screens.spacex.detailscreen.RocketDetailUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class RocketDetailViewModel(
@@ -16,7 +17,7 @@ class RocketDetailViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RocketDetailUiState(isLoading = true))
-    val uiState: StateFlow<RocketDetailUiState> = _uiState
+    val uiState: StateFlow<RocketDetailUiState> = _uiState.asStateFlow()
 
     fun loadRocketDetail(rocketId: String) {
         viewModelScope.launch {
