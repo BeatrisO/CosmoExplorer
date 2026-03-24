@@ -12,8 +12,8 @@ class ApodViewModel(
     private val repository: ApodRepository = ApodRepository()
 ) : ViewModel() {
 
-    private val state = MutableStateFlow(ApodUiState(isLoading = true))
-    val uiState: StateFlow<ApodUiState> = state
+    private val _uiState = MutableStateFlow(ApodUiState(isLoading = true))
+    val uiState: StateFlow<ApodUiState> = _uiState
 
     init {
         loadApod(BuildConfig.NASA_API_KEY)
@@ -24,7 +24,7 @@ class ApodViewModel(
             try {
                 val response = repository.getApod(apiKey)
 
-                state.value = ApodUiState(
+                _uiState.value = ApodUiState(
                     isLoading = false,
                     title = response.title,
                     explanation = response.explanation,
@@ -33,7 +33,7 @@ class ApodViewModel(
                 )
 
             } catch (e: Exception) {
-                state.value = ApodUiState(
+                _uiState.value = ApodUiState(
                     isLoading = false,
                     error = e.message ?: "Error loading APOD"
                 )
