@@ -36,6 +36,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.cosmoexplorer.presentation.viewmodel.RocketDetailViewModel
@@ -79,7 +80,7 @@ fun RocketDetail(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                 }
             }
 
@@ -149,7 +150,9 @@ fun RocketDetail(
                         item {
                             Text(
                                 text = rocket.description,
-                                style = MaterialTheme.typography.bodyMedium
+                                style = MaterialTheme.typography.bodyLarge,
+                                lineHeight = 22.sp,
+                                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f)
                             )
                         }
 
