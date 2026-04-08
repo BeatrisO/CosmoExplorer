@@ -22,6 +22,12 @@ fun SettingsScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text(text = "About")
+
+        Text(text = "About",
+            style = MaterialTheme.typography.titleMedium
+        )
+
+        Text("Cosmo Explorer App")
+        Text("Version 1.0")
     }
 }
