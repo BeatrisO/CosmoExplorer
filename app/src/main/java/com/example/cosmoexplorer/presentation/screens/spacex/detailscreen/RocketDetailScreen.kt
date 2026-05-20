@@ -134,7 +134,7 @@ fun RocketDetail(
                                 bottom = innerPadding.calculateBottomPadding()
                             ),
                         contentPadding = PaddingValues(
-                            top = 280.dp,
+                            top = 310.dp,
                             bottom = 16.dp
                         ),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
