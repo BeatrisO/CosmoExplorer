@@ -1,12 +1,10 @@
-package com.example.cosmoexplorer.presentation.viewmodel
+package com.example.cosmoexplorer.presentation.screens.spacex.detailscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cosmoexplorer.data.repository.SpaceXRepository
 import com.example.cosmoexplorer.extensions.toDisplayDate
 import com.example.cosmoexplorer.extensions.toUsd
-import com.example.cosmoexplorer.presentation.screens.spacex.detailscreen.RocketDetailUiModel
-import com.example.cosmoexplorer.presentation.screens.spacex.detailscreen.RocketDetailUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

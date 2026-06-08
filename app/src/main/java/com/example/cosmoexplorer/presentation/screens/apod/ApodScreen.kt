@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.space.ui.screens.apod.ApodViewModel
+import com.example.cosmoexplorer.presentation.screens.apod.ApodViewModel
 
 @Composable
 fun ApodScreen(

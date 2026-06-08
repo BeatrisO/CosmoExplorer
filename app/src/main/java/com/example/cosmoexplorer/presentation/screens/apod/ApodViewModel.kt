@@ -1,9 +1,10 @@
-package com.example.space.ui.screens.apod
+package com.example.cosmoexplorer.presentation.screens.apod
 
 import ApodRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cosmoexplorer.BuildConfig
+import com.example.space.ui.screens.apod.ApodUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -41,4 +42,3 @@ class ApodViewModel(
         }
     }
 }
-

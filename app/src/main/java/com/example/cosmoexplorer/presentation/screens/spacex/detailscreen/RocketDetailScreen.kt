@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.cosmoexplorer.presentation.viewmodel.RocketDetailViewModel
+import com.example.cosmoexplorer.presentation.screens.spacex.detailscreen.RocketDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
