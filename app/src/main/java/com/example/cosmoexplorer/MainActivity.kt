@@ -19,7 +19,7 @@ import com.example.cosmoexplorer.presentation.screens.apod.ApodScreen
 import com.example.cosmoexplorer.presentation.screens.settings.SettingsScreen
 import com.example.cosmoexplorer.presentation.screens.spacex.detailscreen.RocketDetail
 import com.example.cosmoexplorer.presentation.screens.spacex.listscreen.SpacexScreen
-import com.example.cosmoexplorer.presentation.theme.CosmoExplorerTheme
+import com.example.cosmoexplorer.ui.CosmoExplorerTheme
 
 class MainActivity : ComponentActivity() {
 

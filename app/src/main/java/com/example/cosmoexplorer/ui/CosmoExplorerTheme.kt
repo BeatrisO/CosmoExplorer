@@ -1,4 +1,4 @@
-package com.example.cosmoexplorer.presentation.theme
+package com.example.cosmoexplorer.ui
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme

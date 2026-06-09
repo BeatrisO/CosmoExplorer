@@ -30,11 +30,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.cosmoexplorer.presentation.screens.spacex.listscreen.RocketListViewModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.draw.clip
-import com.example.cosmoexplorer.presentation.theme.SuccessGreen
+import com.example.cosmoexplorer.ui.SuccessGreen
 
 @Composable
 fun SpacexScreen(
